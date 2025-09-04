@@ -50,6 +50,7 @@ class RegisterViewModel : ViewModel() {
         }
     }
 
+    @Deprecated("Use processCsvFile(context, uri, faceViewModel) for unified flow")
     fun processCsvFile(context: Context, uri: Uri) {
         viewModelScope.launch {
             try {
