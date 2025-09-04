@@ -132,12 +132,12 @@ class RegisterViewModel : ViewModel() {
             name = student.name,
             photoUrl = photoPath,
             embedding = embedding,
-            className = student.className ?: "",
-            subClass = student.subClass ?: "",
-            grade = student.grade ?: "",
-            subGrade = student.subGrade ?: "",
-            program = student.program ?: "",
-            role = student.role ?: "",
+            className = student.className ?,
+            subClass = student.subClass ?,
+            grade = student.grade ?,
+            subGrade = student.subGrade ?,
+            program = student.program ?,
+            role = student.role ?,
             timestamp = System.currentTimeMillis()
         )
 
@@ -293,12 +293,12 @@ private suspend fun processStudent(
             name      = student.name,
             embedding = embedding,
             photoUrl  = photoPath,
-            className = student.className ?: "",
-            subClass  = student.subClass ?: "",
-            grade     = student.grade ?: "",
-            subGrade  = student.subGrade ?: "",
-            program   = student.program ?: "",
-            role      = student.role ?: "",
+            className = student.className ?,
+            subClass  = student.subClass ?,
+            grade     = student.grade ?,
+            subGrade  = student.subGrade ?,
+            program   = student.program ?,
+            role      = student.role ?,
             onSuccess = { status = "Registered" },
             onDuplicate = { existing -> status = "Duplicate ($existing)" }
         )
