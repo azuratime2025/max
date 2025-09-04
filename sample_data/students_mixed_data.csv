@@ -1,0 +1,6 @@
+Student ID,Name,Class,Sub Class,Grade,Sub Grade,Program,Role,photoUrl
+STU401,With Good Photo,Test Class,Mixed,Grade 10,Regular,Test Program,Student,https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face
+STU402,No Photo Student,Test Class,Mixed,Grade 10,Regular,Test Program,Student,
+STU403,Another Photo,Test Class,Mixed,Grade 11,Regular,Test Program,Student,https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face
+STU404,Empty Photo URL,Test Class,Mixed,Grade 11,Regular,Test Program,Student,
+STU405,Final Photo,Test Class,Mixed,Grade 12,Regular,Test Program,Student,https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face

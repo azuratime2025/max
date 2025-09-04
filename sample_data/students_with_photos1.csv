@@ -1,0 +1,4 @@
+Student ID,Name,Class,Sub Class,Grade,Sub Grade,Program,Role,photoUrl
+STU001,John Doe,Class A,Sub A1,Grade 1,Sub 1A,Program X,Student,https://example.com/photos/john_doe.jpg
+STU002,Jane Smith,Class B,Sub B1,Grade 2,Sub 2A,Program Y,Student,https://example.com/photos/jane_smith.jpg
+STU003,Alex Lee,Class C,Sub C1,Grade 3,Sub 3A,Program Z,Student,https://example.com/photos/alex_lee.jpg
