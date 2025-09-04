@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crashcourse.ui.components.FaceViewModel
 import com.example.crashcourse.utils.BulkPhotoProcessor
 import com.example.crashcourse.utils.CsvImportUtils
 import com.example.crashcourse.utils.PhotoProcessingUtils
@@ -45,7 +46,7 @@ class BulkRegistrationViewModel : ViewModel() {
         }
     }
 
-    fun processCsvFile(context: Context, uri: Uri) {
+    fun processCsvFile(context: Context, uri: Uri, faceViewModel: FaceViewModel) {
         viewModelScope.launch {
             try {
                 _state.value = ProcessingState(
@@ -80,7 +81,7 @@ class BulkRegistrationViewModel : ViewModel() {
                             currentPhotoSize = ""
                         )
 
-                        val result = processStudent(context, student)
+                        val result = processStudent(context, student, faceViewModel)
                         when {
                             result.status == "Registered" -> successCount++
                             result.status.startsWith("Duplicate") -> duplicateCount++
@@ -124,7 +125,8 @@ class BulkRegistrationViewModel : ViewModel() {
 
     private suspend fun processStudent(
         context: Context,
-        student: CsvImportUtils.CsvStudentData
+        student: CsvImportUtils.CsvStudentData,
+        faceViewModel: com.example.crashcourse.ui.components.FaceViewModel
     ): ProcessResult {
         val photoResult = BulkPhotoProcessor.processPhotoSource(
             context = context,
@@ -170,6 +172,31 @@ class BulkRegistrationViewModel : ViewModel() {
                 error = "Failed to save face photo",
                 photoSize = photoResult.originalSize
             )
+
+        try {
+            faceViewModel.registerFace(
+                studentId = student.studentId,
+                name      = student.name,
+                embedding = embedding,
+                photoUrl  = photoPath,
+                className = student.className ?: "",
+                subClass  = student.subClass ?: "",
+                grade     = student.grade ?: "",
+                subGrade  = student.subGrade ?: "",
+                program   = student.program ?: "",
+                role      = student.role ?: "",
+                onSuccess = { /* no-op */ },
+                onDuplicate = { /* no-op: agregat status tetap dari VM */ }
+            )
+        } catch (e: Exception) {
+            return ProcessResult(
+                studentId = student.studentId,
+                name = student.name,
+                status = "Error",
+                error = e.message ?: "Registration failed",
+                photoSize = photoResult.originalSize
+            )
+        }
 
         return try {
             // In a real app, save to database here
