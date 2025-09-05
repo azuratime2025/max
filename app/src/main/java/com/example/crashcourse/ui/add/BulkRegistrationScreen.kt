@@ -285,7 +285,7 @@ fun BulkRegistrationScreen(
             // Processing controls
             if (fileUri != null && !bulkState.isProcessing) {
                 Button(
-                    onClick = { bulkViewModel.processCsvFile(context, fileUri!!) }, 
+                    onClick = { bulkViewModel.processCsvFile(context, fileUri!!, faceViewModel) }, 
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Icon(Icons.Default.CloudUpload, contentDescription = null)
