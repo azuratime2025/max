@@ -51,15 +51,8 @@ fun MainScreen() {
                     onNavigateToRegister = {
                         navController.navigate(Screen.Register.route)
                     },
-                    // onNavigateToBulkRegister removed as per request
                     onNavigateToBulkRegister = {
                         navController.navigate(Screen.BulkRegister.route)
-                    },
-                    onNavigateToManualCapture = {
-                        navController.navigate(Screen.FaceManualCapture.route)
-                    },
-                    onNavigateToManualRegistration = {
-                        navController.navigate(Screen.ManualRegistration.route)
                     },
                     onNavigateToAddUser = {
                         navController.navigate(Screen.AddUser.route)
@@ -69,9 +62,7 @@ fun MainScreen() {
             composable(Screen.Register.route) {
                 RegisterFaceScreen(
                     useBackCamera = useBackCamera,
-                    viewModel = sharedFaceViewModel,
-                    // onNavigateToBulkRegister removed as per request
-                    onNavigateToBulkRegister = { /* Functionality removed */ }
+                    viewModel = sharedFaceViewModel
                 )
             }
             composable(Screen.AddUser.route) {
@@ -88,7 +79,7 @@ fun MainScreen() {
             }
             composable(Screen.FaceManualCapture.route) {
                 FaceManualCaptureScreen(
-                    onCaptured = { bitmap ->
+                    onCaptured = { _ ->
                         // Handle captured bitmap - save to gallery, process, etc.
                         // For now, just navigate back
                         navController.popBackStack()
@@ -143,11 +134,10 @@ fun MainScreen() {
                 CheckInRecordScreen()
             }
             composable(Screen.Debug.route) {
-                DebugScreen(viewModel = sharedFaceViewModel)
+                DebugScreen()
             }
             composable(Screen.ExcelImageProcess.route) {
                 ExcelImageProcessScreen(
-                    viewModel = sharedFaceViewModel,
                     onNavigateBack = { navController.popBackStack() }
                 )
             }

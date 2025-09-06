@@ -88,9 +88,9 @@ fun FaceAvatar(
                         },
                         onError = { _, error ->
                             Log.e(TAG, "❌ Image loading failed: $photoPath")
-                            Log.e(TAG, "  Error: ${error.throwable?.message}")
-                            Log.e(TAG, "  Error type: ${error.throwable?.javaClass?.simpleName}")
-                            error.throwable?.printStackTrace()
+                            Log.e(TAG, "  Error: ${error.throwable.message}")
+                            Log.e(TAG, "  Error type: ${error.throwable.javaClass.simpleName}")
+                            error.throwable.printStackTrace()
                         }
                     )
                     .build()

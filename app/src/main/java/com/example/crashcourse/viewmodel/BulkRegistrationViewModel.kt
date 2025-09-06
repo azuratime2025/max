@@ -21,11 +21,14 @@ class BulkRegistrationViewModel : ViewModel() {
     val state: StateFlow<ProcessingState> = _state.asStateFlow()
 
     private var photoSources = listOf<String>()
+    private var lastStudents = mapOf<String, CsvImportUtils.CsvStudentData>()
 
     fun prepareProcessing(context: Context, uri: Uri) {
         viewModelScope.launch {
             try {
                 val csvResult = CsvImportUtils.parseCsvFile(context, uri)
+            // simpan ke cache untuk re-run
+            lastStudents = csvResult.students.associateBy { it.studentId }
                 photoSources = csvResult.students.map { it.photoUrl }
                 
                 val seconds = BulkPhotoProcessor.estimateProcessingTime(photoSources)
@@ -179,12 +182,12 @@ class BulkRegistrationViewModel : ViewModel() {
                 name      = student.name,
                 embedding = embedding,
                 photoUrl  = photoPath,
-                className = student.className ?: "",
-                subClass  = student.subClass ?: "",
-                grade     = student.grade ?: "",
-                subGrade  = student.subGrade ?: "",
-                program   = student.program ?: "",
-                role      = student.role ?: "",
+                className = student.className,
+                subClass  = student.subClass,
+                grade     = student.grade,
+                subGrade  = student.subGrade,
+                program   = student.program,
+                role      = student.role,
                 onSuccess = { /* no-op */ },
                 onDuplicate = { /* no-op: agregat status tetap dari VM */ }
             )
@@ -229,4 +232,81 @@ class BulkRegistrationViewModel : ViewModel() {
     fun resetState() {
         _state.value = ProcessingState()
     }
+
+    /** Re-run hanya rows yang sebelumnya Error */
+    fun rerunFailed(context: Context, faceViewModel: com.example.crashcourse.ui.components.FaceViewModel) {
+        val current = state.value
+        if (current.isProcessing) return
+        val failedIds = current.results.filter { it.status == "Error" }.map { it.studentId }
+        if (failedIds.isEmpty()) return
+
+        viewModelScope.launch {
+            try {
+                _state.value = current.copy(
+                    isProcessing = true,
+                    status = "Re-running ${failedIds.size} failed rows..."
+                )
+
+                val newResults = current.results.toMutableList()
+                var addSuccess = 0
+                var addDuplicate = 0
+                var addError = 0
+
+                for (sid in failedIds) {
+                    val student = lastStudents[sid]
+                    if (student == null) {
+                        val idx = newResults.indexOfFirst { it.studentId == sid }
+                        if (idx >= 0) {
+                            newResults[idx] = newResults[idx].copy(
+                                status = "Error",
+                                error = "Missing cached data"
+                            )
+                        }
+                        addError++
+                        continue
+                    }
+
+                    try {
+                        val result = processStudent(context, student, faceViewModel)
+                        val idx = newResults.indexOfFirst { it.studentId == sid }
+                        if (idx >= 0) newResults[idx] = result else newResults.add(result)
+                        when {
+                            result.status == "Registered" -> addSuccess++
+                            result.status.startsWith("Duplicate") -> addDuplicate++
+                            else -> addError++
+                        }
+                    } catch (e: Exception) {
+                        val idx = newResults.indexOfFirst { it.studentId == sid }
+                        val fallback = com.example.crashcourse.utils.ProcessResult(
+                            studentId = sid,
+                            name = lastStudents[sid]?.name ?: sid,
+                            status = "Error",
+                            error = e.message ?: "Re-run failed"
+                        )
+                        if (idx >= 0) newResults[idx] = fallback else newResults.add(fallback)
+                        addError++
+                    }
+                }
+
+                val successCount = newResults.count { it.status == "Registered" }
+                val duplicateCount = newResults.count { it.status.startsWith("Duplicate") }
+                val errorCount = newResults.count { it.status == "Error" }
+
+                _state.value = current.copy(
+                    isProcessing = false,
+                    results = newResults,
+                    successCount = successCount,
+                    duplicateCount = duplicateCount,
+                    errorCount = errorCount,
+                    status = "Re-run done: +$addSuccess ok, +$addDuplicate dup, +$addError err"
+                )
+            } catch (e: Exception) {
+                _state.value = current.copy(
+                    isProcessing = false,
+                    status = "Re-run failed: ${e.message}"
+                )
+            }
+        }
+    }
+
 }

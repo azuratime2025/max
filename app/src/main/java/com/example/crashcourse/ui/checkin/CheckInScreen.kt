@@ -27,8 +27,7 @@ import com.example.crashcourse.ml.FaceRecognizer
 
 @Composable
 fun CheckInScreen(
-    useBackCamera: Boolean,
-    viewModel: FaceViewModel = viewModel()
+    useBackCamera: Boolean
 ) {
     val context = LocalContext.current
 

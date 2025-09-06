@@ -44,8 +44,7 @@ import com.example.crashcourse.ui.components.FaceViewModel
 @Composable
 fun RegisterFaceScreen(
     useBackCamera: Boolean,
-    viewModel: FaceViewModel = viewModel(),
-    onNavigateToBulkRegister: () -> Unit = {}
+    viewModel: FaceViewModel = viewModel()
 ) {
     val context = LocalContext.current
     var name by remember { mutableStateOf("") }
@@ -63,18 +62,12 @@ fun RegisterFaceScreen(
 
     // For dropdown selections
     var selectedClassId by remember { mutableStateOf<Int?>(null) }
-    var selectedSubClassId by remember { mutableStateOf<Int?>(null) }
-    var selectedGradeId by remember { mutableStateOf<Int?>(null) }
-    var selectedSubGradeId by remember { mutableStateOf<Int?>(null) }
     @Suppress("UNUSED_VARIABLE")
     var selectedProgramId by remember { mutableStateOf<Int?>(null) }
     @Suppress("UNUSED_VARIABLE")
     var selectedRoleId by remember { mutableStateOf<Int?>(null) }
 
     // For dropdown expanded states
-    var classExpanded by remember { mutableStateOf(false) }
-    var subClassExpanded by remember { mutableStateOf(false) }
-    var gradeExpanded by remember { mutableStateOf(false) }
     @Suppress("UNUSED_VARIABLE")
     var subGradeExpanded by remember { mutableStateOf(false) }
     @Suppress("UNUSED_VARIABLE")
@@ -83,23 +76,15 @@ fun RegisterFaceScreen(
     var roleExpanded by remember { mutableStateOf(false) }
 
     // Get dropdown options from ViewModel
-    val classOptions by viewModel.classOptions.collectAsState()
-    val gradeOptions by viewModel.gradeOptions.collectAsState()
     @Suppress("UNUSED_VARIABLE")
     val programOptions by viewModel.programOptions.collectAsState()
     @Suppress("UNUSED_VARIABLE")
     val roleOptions by viewModel.roleOptions.collectAsState()
 
     // For dependent dropdowns
-    val subClassOptions: List<SubClassOption> = if (selectedClassId != null) {
-        viewModel.getSubClassOptions(selectedClassId!!).collectAsState(initial = emptyList()).value
-    } else {
-        emptyList()
-    }
-
     @Suppress("UNUSED_VARIABLE")
-    val subGradeOptions: List<SubGradeOption> = if (selectedGradeId != null) {
-        viewModel.getSubGradeOptions(selectedGradeId!!).collectAsState(initial = emptyList()).value
+    val subGradeOptions: List<SubGradeOption> = if (selectedClassId != null) {
+        viewModel.getSubGradeOptions(selectedClassId!!).collectAsState(initial = emptyList()).value
     } else {
         emptyList()
     }
@@ -108,9 +93,7 @@ fun RegisterFaceScreen(
     var capturedBitmap by remember { mutableStateOf<Bitmap?>(null) }
     var isSubmitting by remember { mutableStateOf(false) }
     var isSaved by remember { mutableStateOf(false) }
-    var showAdvancedOptions by remember { mutableStateOf(false) }
     var faceDetected by remember { mutableStateOf(false) }
-    var showRealPhotoCapture by remember { mutableStateOf(false) }
 
     // Camera selection state
     var selectedCameraIsBack by remember { mutableStateOf(useBackCamera) }

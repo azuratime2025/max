@@ -21,9 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Composable
-fun DebugScreen(
-    viewModel: FaceViewModel = viewModel()
-) {
+fun DebugScreen() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 

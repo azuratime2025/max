@@ -1,0 +1,35 @@
+*** Begin Patch
+*** Update File: app/src/main/java/com/example/crashcourse/ui/add/BulkRegistrationScreen.kt
+@@
+             LaunchedEffect(bulkState.isProcessing, bulkState.results) {
+                 if (!bulkState.isProcessing && bulkState.results.isNotEmpty()) {
+                     val msg = "✅ Registered: ${bulkState.successCount}, ⚠️ Duplicate: ${bulkState.duplicateCount}, ❌ Error: ${bulkState.errorCount}"
+                     snackbarHostState.showSnackbar(message = msg)
+                 }
+             }
+@@
+             // Tombol mulai proses
+             if (fileUri != null && !bulkState.isProcessing) {
+                 Button(
+                     onClick = { bulkViewModel.processCsvFile(context, fileUri!!, faceViewModel) },
+                     modifier = Modifier.fillMaxWidth()
+                 ) {
+                     Icon(Icons.Default.CloudUpload, contentDescription = null)
+                     Spacer(Modifier.width(8.dp))
+                     Text("Start Batch Processing")
+                 }
+             }
++
++            // Tombol Re-run gagal (muncul hanya saat ada error dan tidak processing)
++            Spacer(Modifier.height(8.dp))
++            if (bulkState.errorCount > 0 && !bulkState.isProcessing) {
++                Button(
++                    onClick = {
++                        bulkViewModel.rerunFailed(context, faceViewModel)
++                    },
++                    modifier = Modifier.fillMaxWidth()
++                ) {
++                    Text("Re-run Failed Rows")
++                }
++            }
+*** End Patch

@@ -209,35 +209,7 @@ fun FaceListScreen(
                                 try {
                                     Log.d("FaceListScreen", "=== CREATING TEST FACE WITH PHOTO ===")
 
-                                    // Create a test bitmap
-                                    val testBitmap = createTestBitmap("Test User")
-
-                                    // Save it using PhotoStorageUtils
-                                    val testStudentId = "TEST_${System.currentTimeMillis()}"
-                                    val photoUrl = com.example.crashcourse.utils.PhotoStorageUtils.saveFacePhoto(
-                                        context, testBitmap, testStudentId
-                                    )
-
-                                    Log.d("FaceListScreen", "Photo saved to: $photoUrl")
-
-                                    // Create embedding
-                                    val embedding = FloatArray(128) { kotlin.random.Random.nextFloat() }
-
-                                    // Register face
-                                    viewModel.registerFace(
-                                        studentId = testStudentId,
-                                        name = "Test User ${System.currentTimeMillis() % 1000}",
-                                        embedding = embedding,
-                                        photoUrl = photoUrl,
-                                        className = "Test Class",
-                                        onSuccess = {
-                                            Log.d("FaceListScreen", "✅ Test face created successfully!")
-                                            Log.d("FaceListScreen", "Now checking if it appears in the list...")
-                                        },
-                                        onDuplicate = { existing ->
-                                            Log.d("FaceListScreen", "⚠️ Duplicate: $existing")
-                                        }
-                                    )
+                                    createSingleTestFace(context, viewModel)
 
                                     Log.d("FaceListScreen", "=== TEST FACE CREATION COMPLETED ===")
                                 } catch (e: Exception) {
@@ -566,7 +538,7 @@ private suspend fun createSingleTestFace(context: android.content.Context, viewM
 /**
  * Create a test bitmap with text
  */
-private fun createTestBitmap(name: String): android.graphics.Bitmap {
+private fun createTestBitmap(): android.graphics.Bitmap {
     // Removed usage of createBitmap as per cleanup request
     // Placeholder for future implementation
     throw UnsupportedOperationException("Bitmap creation has been removed as part of cleanup")

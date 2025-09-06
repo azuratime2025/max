@@ -1,0 +1,49 @@
+*** Begin Patch
+*** Update File: app/src/main/java/com/example/crashcourse/ui/add/BulkRegistrationScreen.kt
+@@
+ import androidx.compose.material.icons.filled.CloudUpload
++import androidx.compose.material.icons.filled.Info
+ import androidx.compose.material3.SnackbarHost
+ import androidx.compose.material3.SnackbarHostState
+ import androidx.compose.material3.SnackbarResult
+@@
+     Scaffold(
+         snackbarHost = { SnackbarHost(snackbarHostState) },
+         topBar = {
+             TopAppBar(
+                 title = { Text("Bulk Registration") },
+                 navigationIcon = {
+                     IconButton(onClick = { navController.popBackStack() }) {
+                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                     }
+                 },
+-                actions = {}
++                actions = {
++                    // Verify DB count
++                    IconButton(onClick = {
++                        try {
++                            val db = com.example.crashcourse.db.AppDatabase.getInstance(context)
++                            // NOTE: getAllFaces() mungkin suspend; kalau iya, jalankan di LaunchedEffect scope
++                            // Di sini kita gunakan pendekatan sederhana: snapshot synchronous DAO jika tersedia
++                            val count = db.faceDao().getAllFaces().size
++                            // Tampilkan result
++                            androidx.compose.runtime.LaunchedEffect(count) {
++                                snackbarHostState.showSnackbar(
++                                    message = "DB faces: $count"
++                                )
++                            }
++                        } catch (e: Exception) {
++                            androidx.compose.runtime.LaunchedEffect(Unit) {
++                                snackbarHostState.showSnackbar(
++                                    message = "DB check failed: ${e.message ?: "unknown"}"
++                                )
++                            }
++                        }
++                    }) {
++                        Icon(Icons.Default.Info, contentDescription = "Check DB Count")
++                    }
++                }
+             )
+         }
+     ) { padding ->
+*** End Patch

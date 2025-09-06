@@ -30,10 +30,8 @@ import com.example.crashcourse.ui.components.FaceViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExcelImageProcessScreen(
-    viewModel: FaceViewModel = viewModel(),
     onNavigateBack: () -> Unit = {}
 ) {
-    val context = LocalContext.current
 
     // Use our photo processing ViewModel (BulkRegistrationViewModel reference removed as per request)
     // val photoProcessViewModel: BulkRegistrationViewModel = viewModel()
@@ -45,7 +43,6 @@ fun ExcelImageProcessScreen(
     val isProcessing = false
     val processingProgress = 0f
     val processingStatus = ""
-    val processResults = null
 
     // Local state for file selection
     var selectedFileUri by remember { mutableStateOf<Uri?>(null) }

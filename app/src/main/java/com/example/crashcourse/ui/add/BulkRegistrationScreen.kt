@@ -80,23 +80,23 @@ fun BulkRegistrationScreen(
             val contentResolver = context.contentResolver
             val mimeType = contentResolver.getType(it)?.lowercase() ?: ""
             
-            var fileName: String? = null
+            var currentFileName: String? = null
             contentResolver.query(it, null, null, null, null)?.use { cursor ->
                 val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                 if (cursor.moveToFirst() && nameIndex != -1) {
-                    fileName = cursor.getString(nameIndex)
+                    currentFileName = cursor.getString(nameIndex)
                 }
             }
             
             val isCsv = when {
                 mimeType.contains("csv") -> true
-                fileName?.endsWith(".csv", ignoreCase = true) == true -> true
+                currentFileName?.endsWith(".csv", ignoreCase = true) == true -> true
                 else -> false
             }
             
             if (isCsv) {
                 fileUri = it
-                fileName = fileName ?: "selected_file.csv"
+                fileName = currentFileName ?: "selected_file.csv"
                 bulkViewModel.resetState()
                 bulkViewModel.prepareProcessing(context, it)
             } else {
@@ -199,7 +199,7 @@ fun BulkRegistrationScreen(
             
             // Divider
             Spacer(modifier = Modifier.height(24.dp))
-            Divider()
+            HorizontalDivider()
             Spacer(modifier = Modifier.height(16.dp))
             
             // Batch Registration Section
@@ -300,7 +300,7 @@ fun BulkRegistrationScreen(
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         LinearProgressIndicator(
-                            progress = bulkState.progress,
+                            progress = { bulkState.progress },
                             modifier = Modifier.fillMaxWidth()
                         )
                         Spacer(modifier = Modifier.height(8.dp))

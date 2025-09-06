@@ -276,6 +276,13 @@ class FaceViewModel(application: Application) : AndroidViewModel(application) {
         onSuccess: () -> Unit,
         onDuplicate: (existingName: String) -> Unit
     ) {
+       
+       
+       
+       
+       
+       
+       
         // Generate a random student ID for backward compatibility
         val studentId = "STU" + System.currentTimeMillis().toString()
         registerFace(

@@ -119,8 +119,6 @@ object FaceRegistrationHelper {
         context: Context,
         studentId: String,
         faceBitmap: Bitmap,
-        embedding: FloatArray,
-        viewModel: FaceViewModel,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {

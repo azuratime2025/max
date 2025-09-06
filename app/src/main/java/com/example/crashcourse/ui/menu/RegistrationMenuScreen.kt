@@ -29,8 +29,6 @@ import androidx.compose.ui.unit.dp
 fun RegistrationMenuScreen(
     onNavigateToRegister: () -> Unit,
     onNavigateToBulkRegister: () -> Unit,
-    onNavigateToManualCapture: () -> Unit = {},
-    onNavigateToManualRegistration: () -> Unit = {},
     onNavigateToAddUser: () -> Unit = {}
 ) {
     Column(

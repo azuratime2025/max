@@ -49,7 +49,6 @@ fun EditUserScreen(
     }
 
     var name by remember(user) { mutableStateOf(user.name) }
-    var embedding by remember { mutableStateOf<FloatArray?>(null) }
     var isProcessing by remember { mutableStateOf(false) }
     var nameError by remember { mutableStateOf<String?>(null) }
     var hasUnsavedChanges by remember { mutableStateOf(false) }

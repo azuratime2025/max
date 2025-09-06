@@ -34,8 +34,7 @@ import kotlinx.coroutines.launch
 fun PhotoCaptureScreen(
     useBackCamera: Boolean,
     onPhotoCaptured: (Bitmap, FloatArray) -> Unit,
-    onDismiss: () -> Unit,
-    onSelectFromGallery: () -> Unit
+    onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
