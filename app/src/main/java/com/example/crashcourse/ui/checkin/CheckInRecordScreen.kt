@@ -67,7 +67,7 @@ fun CheckInRecordScreen(
     val scope = rememberCoroutineScope()
 
     // Add FaceViewModel for user filtering
-    val faceViewModel: com.example.crashcourse.ui.components.FaceViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    val faceViewModel: com.example.crashcourse.viewmodel.FaceViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     val allFaces by faceViewModel.faceList.collectAsStateWithLifecycle(emptyList())
 
     // Create a common search function that debounces the search

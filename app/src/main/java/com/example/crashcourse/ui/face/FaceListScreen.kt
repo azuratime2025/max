@@ -20,7 +20,7 @@ import com.example.crashcourse.db.FaceEntity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.util.Log
 import kotlinx.coroutines.launch
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 
 
 

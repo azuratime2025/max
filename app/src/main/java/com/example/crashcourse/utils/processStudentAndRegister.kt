@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import com.example.crashcourse.utils.ProcessResult
 import com.example.crashcourse.utils.CsvImportUtils.CsvStudentData
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.example.crashcourse.utils.PhotoProcessingUtils.processBitmapForFaceEmbedding
 import com.example.crashcourse.utils.PhotoStorageUtils.saveFacePhoto
 import com.example.crashcourse.utils.BulkPhotoProcessor.processPhotoSource

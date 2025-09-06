@@ -12,7 +12,7 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.example.crashcourse.utils.PhotoProcessingUtils
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.example.crashcourse.db.FaceEntity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.suspendCancellableCoroutine

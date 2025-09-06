@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.util.Log
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.example.crashcourse.utils.FaceImageSaver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

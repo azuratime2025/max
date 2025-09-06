@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import java.util.*
 import com.example.crashcourse.utils.cosineDistance
 import com.example.crashcourse.db.FaceCache
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.example.crashcourse.ml.FaceRecognizer
 
 

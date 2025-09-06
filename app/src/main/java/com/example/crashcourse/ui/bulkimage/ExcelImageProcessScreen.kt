@@ -25,7 +25,7 @@ import android.util.Log
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

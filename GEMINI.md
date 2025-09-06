@@ -32,3 +32,6 @@ To build the project, run the following command from the root directory:
     *   Deleting a duplicate file (`FaceOverlay2.kt`)
     *   Fixing incorrect function calls
     *   Removing unexpected parameters
+    *   Removed `val` keyword from function parameters.
+    *   Corrected `viewModel` parameter passing in composable functions.
+    *   Added missing `NavController` import.

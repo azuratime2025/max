@@ -39,12 +39,12 @@ import com.example.crashcourse.db.ProgramOption
 import com.example.crashcourse.db.RoleOption
 import kotlinx.coroutines.launch
 import java.util.*
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 
 @Composable
 fun RegisterFaceScreen(
     useBackCamera: Boolean,
-    viewModel: FaceViewModel = viewModel()
+    vm: FaceViewModel
 ) {
     val context = LocalContext.current
     var name by remember { mutableStateOf("") }
@@ -77,14 +77,14 @@ fun RegisterFaceScreen(
 
     // Get dropdown options from ViewModel
     @Suppress("UNUSED_VARIABLE")
-    val programOptions by viewModel.programOptions.collectAsState()
+    val programOptions by vm.programOptions.collectAsState()
     @Suppress("UNUSED_VARIABLE")
-    val roleOptions by viewModel.roleOptions.collectAsState()
+    val roleOptions by vm.roleOptions.collectAsState()
 
     // For dependent dropdowns
     @Suppress("UNUSED_VARIABLE")
     val subGradeOptions: List<SubGradeOption> = if (selectedClassId != null) {
-        viewModel.getSubGradeOptions(selectedClassId!!).collectAsState(initial = emptyList()).value
+        vm.getSubGradeOptions(selectedClassId!!).collectAsState(initial = emptyList()).value
     } else {
         emptyList()
     }
@@ -100,7 +100,7 @@ fun RegisterFaceScreen(
 
     // Populate initial options if needed
     LaunchedEffect(Unit) {
-        viewModel.populateInitialOptions()
+        vm.populateInitialOptions()
     }
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -283,7 +283,7 @@ fun RegisterFaceScreen(
                                         
                                         withContext(Dispatchers.Main) {
                                             Log.d("RegisterFaceScreen", "Registering face with studentId: $finalStudentId, name: ${name.trim()}, photoUrl: $photoUrl")
-                                            viewModel.registerFace(
+                                            vm.registerFace(
                                                 studentId = finalStudentId,
                                                 name = name.trim(),
                                                 embedding = emb,

@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.example.crashcourse.utils.PhotoProcessingUtils
 import com.example.crashcourse.utils.PhotoStorageUtils
 import com.example.crashcourse.viewmodel.BulkRegistrationViewModel

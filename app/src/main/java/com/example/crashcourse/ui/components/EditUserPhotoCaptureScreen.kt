@@ -22,7 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.crashcourse.db.FaceEntity
 import com.example.crashcourse.utils.RealPhotoCaptureManager
 import com.example.crashcourse.utils.EditUserPhotoCaptureManager
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -46,7 +46,7 @@ fun EditUserPhotoCaptureScreen(
     onSuccess: () -> Unit,
     onError: (String) -> Unit,
     onDismiss: () -> Unit,
-    viewModel: FaceViewModel = viewModel()
+    vm: FaceViewModel
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -248,7 +248,7 @@ fun EditUserPhotoCaptureScreen(
                                     
                                     photoCaptureManager.captureAndUpdateUserPhoto(
                                         user = user,
-                                        viewModel = viewModel,
+                                        viewModel = vm,
                                         onSuccess = {
                                             isCapturing = false
                                             onSuccess()

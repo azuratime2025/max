@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.example.crashcourse.utils.BulkPhotoProcessor
 import com.example.crashcourse.utils.CsvImportUtils
 import com.example.crashcourse.utils.PhotoProcessingUtils
@@ -129,7 +129,7 @@ class BulkRegistrationViewModel : ViewModel() {
     private suspend fun processStudent(
         context: Context,
         student: CsvImportUtils.CsvStudentData,
-        faceViewModel: com.example.crashcourse.ui.components.FaceViewModel
+        faceViewModel: com.example.crashcourse.viewmodel.FaceViewModel
     ): ProcessResult {
         val photoResult = BulkPhotoProcessor.processPhotoSource(
             context = context,
@@ -234,7 +234,7 @@ class BulkRegistrationViewModel : ViewModel() {
     }
 
     /** Re-run hanya rows yang sebelumnya Error */
-    fun rerunFailed(context: Context, faceViewModel: com.example.crashcourse.ui.components.FaceViewModel) {
+    fun rerunFailed(context: Context, faceViewModel: com.example.crashcourse.viewmodel.FaceViewModel) {
         val current = state.value
         if (current.isProcessing) return
         val failedIds = current.results.filter { it.status == "Error" }.map { it.studentId }

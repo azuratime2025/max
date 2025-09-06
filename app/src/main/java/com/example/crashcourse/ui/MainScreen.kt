@@ -24,7 +24,7 @@ import com.example.crashcourse.navigation.Screen
 import com.example.crashcourse.ui.add.AddUserScreen
 import com.example.crashcourse.ui.add.BulkRegistrationScreen
 import com.example.crashcourse.ui.edit.EditUserScreen
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,14 +62,14 @@ fun MainScreen() {
             composable(Screen.Register.route) {
                 RegisterFaceScreen(
                     useBackCamera = useBackCamera,
-                    viewModel = sharedFaceViewModel
+                    vm = sharedFaceViewModel
                 )
             }
             composable(Screen.AddUser.route) {
                 AddUserScreen(
+                    navController = navController,
                     onNavigateBack = { navController.popBackStack() },
-                    onUserAdded = { /* Refresh or update list if needed */ },
-                    viewModel = sharedFaceViewModel
+                    onUserAdded = { /* Refresh or update list if needed */ }
                 )
             }
             composable(Screen.BulkRegister.route) {

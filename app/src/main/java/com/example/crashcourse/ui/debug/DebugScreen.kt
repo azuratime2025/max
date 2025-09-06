@@ -14,7 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.crashcourse.db.AppDatabase
 import com.example.crashcourse.db.FaceCache
 import com.example.crashcourse.db.FaceEntity
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.example.crashcourse.utils.cosineDistance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

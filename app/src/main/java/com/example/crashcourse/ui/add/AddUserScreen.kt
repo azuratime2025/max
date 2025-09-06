@@ -15,19 +15,21 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.example.crashcourse.utils.PhotoStorageUtils
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavController
 
 @Composable
 fun AddUserScreen(
-    onNavigateBack: () -> Unit = {},
-    onUserAdded: () -> Unit = {},
-    viewModel: FaceViewModel = viewModel()
+    navController: NavController,
+    onNavigateBack: () -> Unit,
+    onUserAdded: () -> Unit
 ) {
+    val viewModel: FaceViewModel = viewModel()
     // UI state
     var name by remember { mutableStateOf("") }
     var studentId by remember { mutableStateOf("") }

@@ -19,7 +19,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.crashcourse.ui.components.FaceViewModel
+import com.example.crashcourse.viewmodel.FaceViewModel
 import com.example.crashcourse.utils.RealPhotoCaptureManager
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -51,7 +51,7 @@ fun RealPhotoCaptureScreen(
     onSuccess: () -> Unit,
     onError: (String) -> Unit,
     onDismiss: () -> Unit,
-    viewModel: FaceViewModel = viewModel()
+    vm: FaceViewModel
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -239,7 +239,7 @@ fun RealPhotoCaptureScreen(
                                     photoCaptureManager.captureAndProcessPhoto(
                                         studentId = studentId,
                                         name = name,
-                                        viewModel = viewModel,
+                                        viewModel = vm,
                                         className = className,
                                         subClass = subClass,
                                         grade = grade,
